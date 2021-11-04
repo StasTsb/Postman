@@ -65,7 +65,10 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							""
+							"pm.test(\"Set variable\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.environment.set(\"salary\", jsonData.person.u_salary_1_5_year);\r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -90,6 +93,32 @@
 					],
 					"path": [
 						"user_info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"age\" : 28,\r\n    \"salary\" : 1500,\r\n    \"name\" : \"Stas\",\r\n    \"auth_token\" : \"{{token}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/new_data",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"new_data"
 					]
 				}
 			},
