@@ -68,6 +68,10 @@
 							"pm.test(\"Set variable\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.environment.set(\"salary\", jsonData.person.u_salary_1_5_year);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -99,13 +103,73 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "HW2.3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"var result0 = jsonData.salary[0];\r",
+							"var result = parseInt(jsonData.salary[1]);\r",
+							"var result2 = +(jsonData.salary[2]);\r",
+							"\r",
+							"pm.test(\"SalaryCheck0\", function () {\r",
+							"    pm.expect(jsonData.salary[0]).to.eql(6000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"SalaryCheck1\", function () {\r",
+							"    pm.expect(result).to.eql(12000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"SalaryCheck2\", function () {\r",
+							"    pm.expect(result2).to.eql(18000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"MoreLess\", function () {\r",
+							"    pm.expect(result2>result).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"MoreLess2\", function () {\r",
+							"    pm.expect(result2>result0).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"age\" : 28,\r\n    \"salary\" : 1500,\r\n    \"name\" : \"Stas\",\r\n    \"auth_token\" : \"{{token}}\"\r\n}\r\n",
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "32",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "{{salary}}",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Stas",
+							"type": "text"
+						},
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					],
 					"options": {
 						"raw": {
 							"language": "json"
