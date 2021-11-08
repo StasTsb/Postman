@@ -169,12 +169,7 @@
 							"value": "{{token}}",
 							"type": "text"
 						}
-					],
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					]
 				},
 				"url": {
 					"raw": "{{url}}/new_data",
@@ -321,18 +316,19 @@
 			"response": []
 		},
 		{
-			"name": "HW.2.6",
+			"name": "HW2.6",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
 							"var jsonData = pm.response.json();\r",
-							"var values = Object.values(jsonData);\r",
-							"var randomValue = values (Math.random());\r",
-							"var FinalValue = randomValue.Cur_Name;\r",
+							"var item = jsonData[Math.floor(Math.random()*jsonData.length)];\r",
+							"pm.environment.set(\"CurrencyID\", item.Cur_ID);\r",
 							"\r",
-							"pm.environment.set(\"CurrencyID\", FinalValue);\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
 							"\r",
 							""
 						],
@@ -360,6 +356,51 @@
 					],
 					"path": [
 						"currency"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HW2.7",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						},
+						{
+							"key": "curr_code",
+							"value": "{{CurrencyID}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/curr_byn",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"curr_byn"
 					]
 				}
 			},
