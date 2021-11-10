@@ -53,15 +53,6 @@
 			"name": "HW2.2",
 			"event": [
 				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
 					"listen": "test",
 					"script": {
 						"exec": [
@@ -70,9 +61,52 @@
 							"    pm.environment.set(\"salary\", jsonData.person.u_salary_1_5_year);\r",
 							"});\r",
 							"\r",
+							"//AJV schema check responce\r",
+							"const scheme = {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"        \"start_qa_salary\": {\"type\": \"number\"},\r",
+							"        \"qa_salary_after_6_month\": {\"type\": \"number\"},\r",
+							"        \"qa_salary_after_12_month\": {\"type\": \"number\"},\r",
+							"        \"person\": {\r",
+							"            \"type\": \"object\",\r",
+							"            \"properties\": {\r",
+							"                \"u_age\": {\"type\": \"number\"},  \r",
+							"                \"u_name\": {\r",
+							"                    \"type\": \"array\",\r",
+							"                    \"items\": {\r",
+							"                        \"type\": \"string\",\r",
+							"                        \"type\": \"number\",\r",
+							"                        \"type\": \"number\"},\r",
+							"                    \r",
+							"                    \r",
+							"                \r",
+							"                \"u_salary_1_5_year\": {\"type\": \"number\"}              \r",
+							"                                              \r",
+							"                    \r",
+							"          \r",
+							"\r",
+							"\r",
+							"                \r",
+							"            }\r",
+							"        }\r",
+							"    }\r",
+							"        \r",
+							"   \r",
+							"}}\r",
+							"\r",
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -324,7 +358,7 @@
 						"exec": [
 							"var jsonData = pm.response.json();\r",
 							"var item = jsonData[Math.floor(Math.random()*jsonData.length)];\r",
-							"pm.environment.set(\"CurrencyID\", item.Cur_ID);\r",
+							"pm.environment.set(\"сurrencyID\", item.Cur_ID);\r",
 							"\r",
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -389,7 +423,7 @@
 						},
 						{
 							"key": "curr_code",
-							"value": "{{CurrencyID}}",
+							"value": "{{сurrencyID}}",
 							"type": "text"
 						}
 					]
@@ -401,6 +435,44 @@
 					],
 					"path": [
 						"curr_byn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "*",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/currency",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"currency"
 					]
 				}
 			},
