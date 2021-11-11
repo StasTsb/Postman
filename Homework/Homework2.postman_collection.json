@@ -13,7 +13,19 @@
 					"script": {
 						"exec": [
 							"var jsonData = pm.response.json();\r",
-							"pm.environment.set(\"token\", jsonData.token);"
+							"pm.environment.set(\"token\", jsonData.token);\r",
+							"\r",
+							"//AJV schema check responce\r",
+							"const scheme = {\r",
+							"    \"type\": \"object\",\r",
+							"     \"properties\": {\r",
+							"        \"token\": {\"type\": \"object\"}\r",
+							"        }\r",
+							"};\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -93,7 +105,7 @@
 							"    }\r",
 							"        \r",
 							"   \r",
-							"}}\r",
+							"}};\r",
 							"\r",
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
